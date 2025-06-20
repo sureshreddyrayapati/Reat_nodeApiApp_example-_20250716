@@ -1,57 +1,39 @@
-import { useEffect, useState } from 'react';
+import GetDetails from "./componets/api_get";
+import AddUser from "./componets/api_post";
+import Users from "./componets/api_delete_edit";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { BrowserRouter,Route, Routes, NavLink } from "react-router-dom";
+import "./App.css";
  
-interface User {
-  name: string;
-  age: number;
+function App(){
+  return(
+    <BrowserRouter>
+    <nav>
+        <NavLink to="get" className={({ isActive }) => (isActive ? "active" : "")}>All Users</NavLink>
+        <NavLink to="Post" className={({ isActive }) => (isActive ? "active" : "")}>Add User</NavLink>
+        <NavLink to="Update" className={({ isActive }) => (isActive ? "active" : "")}>Edit & Delete</NavLink>
+    </nav>
+    <main style={{ marginLeft: "200px", padding: "20px" }}>
+    <Routes>
+        <Route path="get" element={<GetDetails/>}/>
+        <Route path="Post" element={<AddUser/>}/>
+        < Route path="Update" element={<Users/>}/>
+    </Routes>
+    </main>
+    <ToastContainer />
+    </BrowserRouter>
+   
+    // <>
+    // <h1>React + Node API (GET Example)</h1>
+    // <br />
+    //  <GetDetails/>
+    //  <br />
+    //  <AddUser/>
+    //  <Users/>
+    //  
+    // </>
+  )
 }
- 
-function App() {
-  const [user, setUser] = useState<User | null>(null);
- 
-  useEffect(() => {
-    fetch('http://localhost:5000/api/users')
-      .then((res) => res.json())
-      .then((data: User) => setUser(data))
-      .catch((err) => console.error(err));
-  }, []);
- 
-  return (
-    <div>
-      <h1>React + Node API (GET Example)</h1>
- 
-      {user ? (
-        <div>
-          <h2>User Data:</h2>
-          <p>Name: {user.name}</p>
-          <p>Age: {user.age}</p>
-        </div>
-      ) : (
-        <p>Loading...</p>
-      )}
-    </div>
-  );
-}
-/*import { useEffect, useState } from 'react';
- 
-function App() {
-  const [message, setMessage] = useState<string>('');
- 
-  useEffect(() => {
-    fetch('http://localhost:5000/')
-      .then((res) => res.json())
-      .then((data) => setMessage(data.message))
-      .catch((err) => console.error(err));
-  }, []);
- 
-  return (
-    <div>
-      <h1>React + TypeScript → Connected to Node API</h1>
-      <h2>{message}</h2>
-    </div>
-  );
-}
- 
-export default App;*/
  
 export default App;
- 
